@@ -79,8 +79,8 @@ app.use(bodyParser.json())
           );
             });
             
-            app.listen(8080, function() {
-                console.log('listening on 8080');
+            app.listen(80, function() {
+                console.log('listening on 80');
             });
 
         } catch (e) {
