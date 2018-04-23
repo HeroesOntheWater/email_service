@@ -3,6 +3,8 @@ const app = express();
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 var bodyParser = require('body-parser');
+const PORT = process.env.PORT || 8080;
+
 
 
 //Get document, or throw exception on error
@@ -79,8 +81,8 @@ app.use(bodyParser.json())
           );
             });
             
-            app.listen(80, function() {
-                console.log('listening on 80');
+            app.listen(PORT, function() {
+                console.log(`listening on ${PORT}`);
             });
 
         } catch (e) {
