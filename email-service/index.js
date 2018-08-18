@@ -3,7 +3,7 @@ const app = express();
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
-const dotenv = require('dotenv').config();
+//const dotenv = require('dotenv').config();
 var bodyParser = require('body-parser');
 var auth = require('basic-auth')
 const PORT = process.env.port || 8080;
@@ -18,7 +18,7 @@ class EmailServiceClient {
         try {
 
           // This is for testing server locally.
-          app.use(cors());
+          //app.use(cors());
 
           // parse application/x-www-form-urlencoded
           app.use(bodyParser.urlencoded({ extended: false }));
