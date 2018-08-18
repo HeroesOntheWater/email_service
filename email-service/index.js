@@ -3,12 +3,10 @@ const app = express();
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
-//const dotenv = require('dotenv').config();
 var bodyParser = require('body-parser');
 var auth = require('basic-auth');
 var userList = process.env.userlist.split(';');
-
-
+var delayOn = false;
 
 //Get document, or throw exception on error
 class EmailServiceClient {
@@ -27,11 +25,9 @@ class EmailServiceClient {
 
           // verify tokens
           app.use((req, res, next) => {
-            if (req.path.includes('token')){
-              next();
-              return;
-            }
-            if (!req.body.token) {res.status(404).send('This page does not exist. Down for maintenance'); return;}
+            if (delayOn) { return  res.status(503).send('Service Unavailable'); }
+            if (req.path.includes('token')){ next(); return; }
+            if (!req.body.token) { res.status(404).send('This page does not exist. Down for maintenance'); return; }
             jwt.verify(req.body.token, process.env.secret, function(err, decoded) {
 
               // Check if token passed.
@@ -63,14 +59,18 @@ class EmailServiceClient {
           app.get('/token', (req, res, next) => {
             res.json({
               'token': jwt.sign({
-                exp: Math.floor(Date.now() / 1000) + 30,
-                data: 'test'
+                exp: Math.floor(Date.now() / 1000) + 30, // expires in 30 seconds.
+                data: 'salt'
               }, process.env.secret)
             });
           });
 
           // Handle request made for sending emails.
           app.post('/sendemail', (req, res, next) => {
+
+            // Set delay, this will help block spamming the Mail API.
+            delayOn = true;
+            setTimeout(() => { delayOn = false; }, 15000);
 
             // Build form data for mailfun to read.
             var formData = {
