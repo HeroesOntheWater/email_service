@@ -7,7 +7,7 @@ const _ = require('lodash');
 var bodyParser = require('body-parser');
 var auth = require('basic-auth')
 const PORT = process.env.port || 8080;
-var userList = process.env.userList.split(';');
+var userList = process.env.userlist.split(';');
 
 
 
