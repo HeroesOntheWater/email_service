@@ -5,8 +5,7 @@ const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 //const dotenv = require('dotenv').config();
 var bodyParser = require('body-parser');
-var auth = require('basic-auth')
-const PORT = process.env.port || 8080;
+var auth = require('basic-auth');
 var userList = process.env.userlist.split(';');
 
 
@@ -111,7 +110,7 @@ class EmailServiceClient {
           });
           
           // Set listener port for current server.
-          app.listen(PORT, function() {
+          app.listen(process.env.PORT || 8080, function() {
               console.log(`listening on ${PORT}`);
           });
 
