@@ -110,9 +110,7 @@ class EmailServiceClient {
           });
           
           // Set listener port for current server.
-          app.listen(process.env.PORT || 8080, function() {
-              console.log(`listening on ${PORT}`);
-          });
+          app.listen(process.env.PORT || 8080);
 
         } catch (e) {
           console.log(e);
